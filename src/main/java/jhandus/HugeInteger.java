@@ -1,6 +1,5 @@
 package jhandus;
 
-
 public class HugeInteger {
 	
 	private final String value;
