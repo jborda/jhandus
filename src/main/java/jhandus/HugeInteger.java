@@ -1,72 +1,104 @@
 package jhandus;
 
+import java.util.Arrays;
+
+
 public class HugeInteger {
 	
-	private final String value;
-	private final int[] valueArray;
+	private String value;
+	private int[] valueArray;
+	private boolean negative;
 
 	public HugeInteger(String value) {
 		this.value = value;
-		this.valueArray = createArrayFromString(value);
+		
+		initializeFromString();
 	}
 	
-	public HugeInteger(int[] arrayValue) {
-		this.value = createStringFromArray(arrayValue);
-		this.valueArray = arrayValue;
+	public HugeInteger(int[] valueArray, boolean negative) {
+		this.valueArray = valueArray;
+		this.negative = negative;
+		
+		initializeFromArrayAndNegativeFlag();
 	}
 
-	private String createStringFromArray(int[] arrayValue) {
-		
+	private void initializeFromArrayAndNegativeFlag() {
 		StringBuilder valueBuilder = new StringBuilder();
-		for (int index = arrayValue.length - 1; index >= 0; index--) {
-			valueBuilder.append(arrayValue[index]);
-		}
 		
-		return valueBuilder.toString();
+		if (negative)
+			valueBuilder.append("-");
+		
+		for (int i = valueArray.length - 1; i >= 0; i--)
+			valueBuilder.append(valueArray[i]);
+
+		value = valueBuilder.toString();
 	}
 
-	private int[] createArrayFromString(String value) {
+	private void initializeFromString() {
+		negative = value.startsWith("-");
+		valueArray = new int[negative ? value.length() - 1 : value.length()];
+
+		char[] charArray = value.toCharArray();
+		int reverseIndex = valueArray.length - 1;
 		
-		int[] array = new int[value.length()];
-		int reverseIndex = array.length -1;
-		for (int index = 0; index < array.length; index++) {
-			array[reverseIndex--] = Integer.valueOf(String.valueOf(value.charAt(index)));
-		}
-		
-		return array;
+		for (int i = (negative ? 1 : 0); i < charArray.length; i++)
+			valueArray[reverseIndex--] = Integer.valueOf(String.valueOf(charArray[i]));
 	}
 
 	public HugeInteger add(HugeInteger other) {
-		
-		int[] maxArray;
-		int[] minArray;
-		
-		if (this.getValueArray().length >= other.getValueArray().length) {
-			maxArray = this.getValueArray();
-			minArray = other.getValueArray();
-		} else {
-			maxArray = other.getValueArray();
-			minArray = this.getValueArray();
-		}
+		int maxSize = Math.max(size(), other.size());
+		int[] resultArray = new int[maxSize];
 
-		int[] resultArray = new int[maxArray.length + 1];
 		int rest = 0;
 		
-		for (int index = maxArray.length; index > 0; index--) {
-			int one = maxArray[index - 1];
-			int two = (index > minArray.length) ? 0 : minArray[index - 1];
-			int result = one + two + rest;
+		for (int i = 0; i < maxSize; i++) {
+			int result = getValueAt(i) + other.getValueAt(i) + rest;
+			
 			if (result > 9) {
-				result = result - 10;
-				rest = 1;
+				rest = result / 10;
+				result = result - (rest * 10);
 			} else {
 				rest = 0;
 			}
-			System.out.println(result);
-			resultArray[index - 1] = result;
+			
+			resultArray[i] = result;
+		}
+		
+		if (rest > 0) {
+			resultArray = Arrays.copyOf(resultArray, resultArray.length + 1);
+			resultArray[resultArray.length - 1] = rest;
 		}
 
-		return new HugeInteger(resultArray);
+		return new HugeInteger(resultArray, false);
+	}
+	
+	public HugeInteger subtract(HugeInteger other) {
+		int maxSize = Math.max(size(), other.size());
+		int[] resultArray = new int[maxSize];
+
+		int rest = 0;
+		boolean negative = false;
+		
+		for (int i = 0; i < maxSize; i++) {
+			boolean last = i == maxSize - 1;
+			int result = getValueAt(i) - other.getValueAt(i) - rest;
+			
+			if (result < 0) {
+				if (last) {
+					negative = true;
+					result = Math.abs(result);
+				} else {
+					rest = 1;
+					result = 10 + result;
+				}
+			} else {
+				rest = 0;
+			}
+			
+			resultArray[i] = result;
+		}
+
+		return new HugeInteger(resultArray, negative);
 	}
 
 	@Override
@@ -74,8 +106,16 @@ public class HugeInteger {
 		return value;
 	}
 	
-	protected int[] getValueArray() {
-		return valueArray;
+	public int size() {
+		return valueArray.length;
+	}
+	
+	public int getValueAt(int index) {
+		return (size() > index) ? valueArray[index] : 0;
+	}
+	
+	public boolean isNegative() {
+		return negative;
 	}
 	
 }
