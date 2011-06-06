@@ -32,6 +32,8 @@ public class HugeIntegerTest {
 		assertAdd("198", "99", "99");
 		assertAdd("2000", "510", "1490");
 		assertAdd("11169942196900779", "9871201098490890", "1298741098409889");
+		
+//		TODO resolver soma de negativos
 	}
 	
 //	@Test
@@ -40,7 +42,7 @@ public class HugeIntegerTest {
 			new HugeInteger("9871201098490890").add(new HugeInteger("1298741098409889")).toString();
 	}
 	
-//	@Test
+	@Test
 	public void testSubtract() {
 		assertSubtract("0", "0", "0");
 		assertSubtract("0", "2", "2");
@@ -48,6 +50,10 @@ public class HugeIntegerTest {
 		assertSubtract("4580934196", "4654984100", "74049904");
 		assertSubtract("-4580934196", "74049904", "4654984100");
 		assertSubtract("17", "25", "8");
+		
+//		TODO: resolver subtração de negativos
+//		assertSubtract("-17", "-25", "-8");
+//		assertSubtract("31", "23", "-8");
 	}
 
 	@Test
@@ -59,7 +65,7 @@ public class HugeIntegerTest {
 	}
 	
 	@Test
-	public void testCompation() {
+	public void testComparation() {
 		assertCompare(0, "0", "0");
 		assertCompare(0, "1", "1");
 		assertCompare(0, "987123404", "987123404");

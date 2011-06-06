@@ -73,22 +73,32 @@ public class HugeInteger implements Comparable<HugeInteger> {
 	}
 	
 	public HugeInteger subtract(HugeInteger other) {
-		int maxSize = Math.max(size(), other.size());
-		int[] resultArray = new int[maxSize];
+		if (compareTo(other) >= 0)
+			return subtract(this, other, false);
+		else
+			return subtract(other, this, true);
+	}
 
+	private HugeInteger subtract(HugeInteger greatValue, HugeInteger lessValue, boolean negative) {
+		int maxSize = Math.max(greatValue.size(), lessValue.size());
+		int[] resultArray = new int[maxSize];
 		int rest = 0;
-		boolean negative = false;
-		
+
 		for (int i = 0; i < maxSize; i++) {
-			int result = getValueAt(i) - other.getValueAt(i) - rest;
-			//TODO
+			int result = greatValue.getValueAt(i) - lessValue.getValueAt(i) - rest;
+
+			if (result < 0) {
+				rest = 1;
+				result += 10;
+			} else {
+				rest = 0;
+			}
+			
 			resultArray[i] = result;
 		}
 
 		return new HugeInteger(resultArray, negative);
 	}
-
-	
 	
 	@Override
 	public String toString() {
