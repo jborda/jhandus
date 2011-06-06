@@ -12,6 +12,7 @@
 		<module>huge-integer-calc-core</module>
 		<module>huge-integer-calc-client</module>
 		<module>huge-integer-calc-server</module>
+		<module>huge-integer-calc-spykes</module>
 	</modules>
 
 </project>
