@@ -40,7 +40,7 @@ public class HugeIntegerTest {
 			new HugeInteger("9871201098490890").add(new HugeInteger("1298741098409889")).toString();
 	}
 	
-	@Test
+//	@Test
 	public void testSubtract() {
 		assertSubtract("0", "0", "0");
 		assertSubtract("0", "2", "2");
@@ -58,11 +58,54 @@ public class HugeIntegerTest {
 		assertEquals(7, number.getValueAt(2));
 	}
 	
-	private void assertAdd(String expectedResult, String value1, String value2) {
-		assertEquals(expectedResult, new HugeInteger(value1).add(new HugeInteger(value2)).toString());
+	@Test
+	public void testCompation() {
+		assertCompare(0, "0", "0");
+		assertCompare(0, "1", "1");
+		assertCompare(0, "987123404", "987123404");
+		assertCompare(0, "-0", "-0");
+		assertCompare(0, "-1", "-1");
+		assertCompare(0, "-987123404", "-987123404");
+		
+		assertCompare(1, "1", "0");
+		assertCompare(1, "2", "1");
+		assertCompare(1, "2", "-1");
+		assertCompare(1, "-1", "-2");
+		assertCompare(1, "785", "0");
+		assertCompare(1, "98101", "321");
+		assertCompare(1, "98101", "1");
+		assertCompare(1, "98101", "98100");
+		assertCompare(1, "70654", "-1");
+		assertCompare(1, "70654", "-654");
+		assertCompare(1, "70654", "-90000000");
+		assertCompare(1, "-70654", "-70655");
+		assertCompare(1, "-70654", "-90000000");
+		
+		assertCompare(-1, "0", "1");
+		assertCompare(-1, "1", "2");
+		assertCompare(-1, "-1", "2");
+		assertCompare(-1, "-2", "-1");
+		assertCompare(-1, "0", "785");
+		assertCompare(-1, "321", "98101");
+		assertCompare(-1, "1", "98101");
+		assertCompare(-1, "98100", "98101");
+		assertCompare(-1, "-1", "70654");
+		assertCompare(-1, "-654", "70654");
+		assertCompare(-1, "-90000000", "70654");
+		assertCompare(-1, "-70655", "-70654");
+		assertCompare(-1, "-90000000", "-70654");
+		
 	}
 	
-	private void assertSubtract(String expectedResult, String value1, String value2) {
-		assertEquals(expectedResult, new HugeInteger(value1).subtract(new HugeInteger(value2)).toString());
+	private void assertAdd(String expectedResult, String first, String second) {
+		assertEquals(expectedResult, new HugeInteger(first).add(new HugeInteger(second)).toString());
+	}
+	
+	private void assertSubtract(String expectedResult, String first, String second) {
+		assertEquals(expectedResult, new HugeInteger(first).subtract(new HugeInteger(second)).toString());
+	}
+	
+	private void assertCompare(int expected, String first, String second) {
+		assertEquals(expected, new HugeInteger(first).compareTo(new HugeInteger(second)));
 	}
 }

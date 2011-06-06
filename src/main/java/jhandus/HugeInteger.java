@@ -3,20 +3,20 @@ package jhandus;
 import java.util.Arrays;
 
 
-public class HugeInteger {
+public class HugeInteger implements Comparable<HugeInteger> {
 	
-	private String value;
-	private int[] valueArray;
+	private String stringValue;
+	private int[] arrayValue;
 	private boolean negative;
 
 	public HugeInteger(String value) {
-		this.value = value;
+		this.stringValue = value;
 		
 		initializeFromString();
 	}
 	
-	public HugeInteger(int[] valueArray, boolean negative) {
-		this.valueArray = valueArray;
+	public HugeInteger(int[] arrayValue, boolean negative) {
+		this.arrayValue = arrayValue;
 		this.negative = negative;
 		
 		initializeFromArrayAndNegativeFlag();
@@ -28,21 +28,21 @@ public class HugeInteger {
 		if (negative)
 			valueBuilder.append("-");
 		
-		for (int i = valueArray.length - 1; i >= 0; i--)
-			valueBuilder.append(valueArray[i]);
+		for (int i = arrayValue.length - 1; i >= 0; i--)
+			valueBuilder.append(arrayValue[i]);
 
-		value = valueBuilder.toString();
+		stringValue = valueBuilder.toString();
 	}
 
 	private void initializeFromString() {
-		negative = value.startsWith("-");
-		valueArray = new int[negative ? value.length() - 1 : value.length()];
+		negative = stringValue.startsWith("-");
+		arrayValue = new int[negative ? stringValue.length() - 1 : stringValue.length()];
 
-		char[] charArray = value.toCharArray();
-		int reverseIndex = valueArray.length - 1;
+		char[] charArray = stringValue.toCharArray();
+		int reverseIndex = arrayValue.length - 1;
 		
 		for (int i = (negative ? 1 : 0); i < charArray.length; i++)
-			valueArray[reverseIndex--] = Integer.valueOf(String.valueOf(charArray[i]));
+			arrayValue[reverseIndex--] = Integer.valueOf(String.valueOf(charArray[i]));
 	}
 
 	public HugeInteger add(HugeInteger other) {
@@ -80,42 +80,58 @@ public class HugeInteger {
 		boolean negative = false;
 		
 		for (int i = 0; i < maxSize; i++) {
-			boolean last = i == maxSize - 1;
 			int result = getValueAt(i) - other.getValueAt(i) - rest;
-			
-			if (result < 0) {
-				if (last) {
-					negative = true;
-					result = Math.abs(result);
-				} else {
-					rest = 1;
-					result = 10 + result;
-				}
-			} else {
-				rest = 0;
-			}
-			
+			//TODO
 			resultArray[i] = result;
 		}
 
 		return new HugeInteger(resultArray, negative);
 	}
 
+	
+	
 	@Override
 	public String toString() {
-		return value;
+		return stringValue;
 	}
 	
 	public int size() {
-		return valueArray.length;
+		return arrayValue.length;
 	}
 	
 	public int getValueAt(int index) {
-		return (size() > index) ? valueArray[index] : 0;
+		return (size() > index) ? arrayValue[index] : 0;
 	}
 	
 	public boolean isNegative() {
 		return negative;
+	}
+
+	@Override
+	public int compareTo(HugeInteger other) {
+		if (!isNegative() && other.isNegative())
+			return 1;
+		
+		if (isNegative() && !other.isNegative())
+			return -1;
+
+		if (size() > other.size())
+			return negative ? -1 : 1;
+
+		if (size() < other.size())
+			return negative ? 1 : -1;
+		
+		for (int i = size() -1; i >= 0; i--) {
+			if (getValueAt(i) == other.getValueAt(i))
+				continue;
+			
+			if (getValueAt(i) > other.getValueAt(i))
+				return negative ? -1 : 1;
+			
+			return negative ? 1 : -1;
+		}
+		
+		return 0;
 	}
 	
 }
