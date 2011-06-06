@@ -1,4 +1,4 @@
-package jhandus;
+package br.com.objective.jeecourse;
 
 public interface Calculator {
 

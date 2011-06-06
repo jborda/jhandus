@@ -1,8 +1,11 @@
-package jhandus;
+package br.com.objective.jeecourse;
 
 import static junit.framework.Assert.*;
 
 import org.junit.Test;
+
+import br.com.objective.jeecourse.Calculator;
+import br.com.objective.jeecourse.CalculatorImpl;
 
 public class CalculatorTest {
 

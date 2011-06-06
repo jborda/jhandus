@@ -1,8 +1,10 @@
-package jhandus;
+package br.com.objective.jeecourse;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import br.com.objective.jeecourse.HugeInteger;
 
 public class HugeIntegerTest {
 

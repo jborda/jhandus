@@ -10,6 +10,7 @@
 	<artifactId>huge-integer-calc-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Huge Integer Calculator - Core</name>
+	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>

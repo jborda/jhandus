@@ -1,4 +1,4 @@
-package jhandus;
+package br.com.objective.jeecourse;
 
 import java.util.Arrays;
 
