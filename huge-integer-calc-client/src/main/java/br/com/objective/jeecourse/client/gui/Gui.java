@@ -1,13 +1,21 @@
 package br.com.objective.jeecourse.client.gui;
 
+import br.com.objective.jeecourse.core.Calculator;
+import br.com.objective.jeecourse.core.CalculatorFactory;
+
+
 public class Gui {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		new Gui();
 	}
 
+	private Gui() {
+		CalculatorFactory factory = new CalculatorFactory();
+		Calculator calculator = factory.newCalculator();
+		View view = new View();
+	}
 }

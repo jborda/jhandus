@@ -3,7 +3,7 @@ package br.com.objective.jeecourse.core;
 import java.util.Arrays;
 
 
-public class HugeInteger implements Comparable<HugeInteger> {
+class HugeInteger implements Comparable<HugeInteger> {
 	
 	private String stringValue;
 	private int[] arrayValue;

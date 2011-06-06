@@ -1,6 +1,6 @@
 package br.com.objective.jeecourse.core;
 
-public class CalculatorImpl implements Calculator {
+class CalculatorImpl implements Calculator {
 	
 	CalculatorImpl() {}
 
