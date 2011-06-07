@@ -1,9 +1,8 @@
 package br.com.objective.jeecourse.core;
 
 public class CalculatorFactory {
-
 	
-	public Calculator newCalculator() {
+	public static Calculator newCalculator() {
 		return new CalculatorImpl();
 	}
 	
