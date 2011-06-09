@@ -46,58 +46,14 @@ class HugeInteger implements Comparable<HugeInteger> {
 	}
 
 	public HugeInteger add(HugeInteger other) {
-		int maxSize = Math.max(size(), other.size());
-		int[] resultArray = new int[maxSize];
-
-		int rest = 0;
-		
-		for (int i = 0; i < maxSize; i++) {
-			int result = getValueAt(i) + other.getValueAt(i) + rest;
-			
-			if (result > 9) {
-				rest = result / 10;
-				result = result - (rest * 10);
-			} else {
-				rest = 0;
-			}
-			
-			resultArray[i] = result;
-		}
-		
-		if (rest > 0) {
-			resultArray = Arrays.copyOf(resultArray, resultArray.length + 1);
-			resultArray[resultArray.length - 1] = rest;
-		}
-
-		return new HugeInteger(resultArray, false);
+		return add(this, other, false);
 	}
 	
 	public HugeInteger subtract(HugeInteger other) {
-		if (compareTo(other) >= 0)
+		if (compareTo(other) >= 0) 
 			return subtract(this, other, false);
-		else
+		else 
 			return subtract(other, this, true);
-	}
-
-	private HugeInteger subtract(HugeInteger greatValue, HugeInteger lessValue, boolean negative) {
-		int maxSize = Math.max(greatValue.size(), lessValue.size());
-		int[] resultArray = new int[maxSize];
-		int rest = 0;
-
-		for (int i = 0; i < maxSize; i++) {
-			int result = greatValue.getValueAt(i) - lessValue.getValueAt(i) - rest;
-
-			if (result < 0) {
-				rest = 1;
-				result += 10;
-			} else {
-				rest = 0;
-			}
-			
-			resultArray[i] = result;
-		}
-
-		return new HugeInteger(resultArray, negative);
 	}
 	
 	@Override
@@ -116,13 +72,17 @@ class HugeInteger implements Comparable<HugeInteger> {
 	public boolean isNegative() {
 		return negative;
 	}
+	
+	public boolean isPositive() {
+		return !negative;
+	}
 
 	@Override
 	public int compareTo(HugeInteger other) {
-		if (!isNegative() && other.isNegative())
+		if (isPositive() && other.isNegative())
 			return 1;
 		
-		if (isNegative() && !other.isNegative())
+		if (isNegative() && other.isPositive())
 			return -1;
 
 		if (size() > other.size())
@@ -144,4 +104,50 @@ class HugeInteger implements Comparable<HugeInteger> {
 		return 0;
 	}
 	
+	private static HugeInteger add(HugeInteger left, HugeInteger right, boolean negative) {
+		int maxSize = Math.max(left.size(), right.size());
+		int[] resultArray = new int[maxSize];
+		int rest = 0;
+		
+		for (int i = 0; i < maxSize; i++) {
+			int result = left.getValueAt(i) + right.getValueAt(i) + rest;
+			
+			if (result > 9) {
+				rest = 1;
+				result = result - 10;
+			} else {
+				rest = 0;
+			}
+			
+			resultArray[i] = result;
+		}
+		
+		if (rest > 0) {
+			resultArray = Arrays.copyOf(resultArray, resultArray.length + 1);
+			resultArray[resultArray.length - 1] = rest;
+		}
+
+		return new HugeInteger(resultArray, negative);
+	}
+	
+	private static HugeInteger subtract(HugeInteger greatValue, HugeInteger lessValue, boolean negative) {
+		int maxSize = Math.max(greatValue.size(), lessValue.size());
+		int[] resultArray = new int[maxSize];
+		int rest = 0;
+
+		for (int i = 0; i < maxSize; i++) {
+			int result = greatValue.getValueAt(i) - lessValue.getValueAt(i) - rest;
+
+			if (result < 0) {
+				rest = 1;
+				result += 10;
+			} else {
+				rest = 0;
+			}
+			
+			resultArray[i] = result;
+		}
+
+		return new HugeInteger(resultArray, negative);
+	}
 }

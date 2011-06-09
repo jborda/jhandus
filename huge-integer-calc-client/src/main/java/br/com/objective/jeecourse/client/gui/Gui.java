@@ -6,9 +6,6 @@ import br.com.objective.jeecourse.core.CalculatorFactory;
 
 public class Gui {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		new Gui();
 	}
@@ -17,5 +14,7 @@ public class Gui {
 		CalculatorFactory factory = new CalculatorFactory();
 		Calculator calculator = factory.newCalculator();
 		View view = new View();
+		
+		new Controller(calculator, view);
 	}
 }
