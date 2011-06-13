@@ -8,6 +8,24 @@
 	<name>Huge Integer Calculator</name>
 	<packaging>pom</packaging>
 	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.8.2</version>
+				<type>jar</type>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>br.com.objective.jeecourse</groupId>
+				<artifactId>huge-integer-calc-core</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+				<scope>compile</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<modules>
 		<module>huge-integer-calc-core</module>
 		<module>huge-integer-calc-client</module>

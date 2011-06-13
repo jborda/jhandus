@@ -1,10 +1,31 @@
 package br.com.objective.jeecourse.client.console;
 
-import java.util.Scanner;
+import java.io.IOException;
+
+import br.com.objective.jeecourse.core.Calculator;
+import br.com.objective.jeecourse.core.CalculatorFactory;
 
 public class Console {
 	
-//	Calculator calculator = CalculatorFactory.newCalculator();
+	Calculator calculator = new CalculatorFactory().newCalculator();
+	OPTION option;
+	
+	enum OPTION {
+		A("add"),
+		S("subtract"),
+		C("compare"),
+		X("sair");
+		
+		String operationName;
+		
+		public String getOperationName() {
+			return operationName;
+		}
+		
+		OPTION(String operation) {
+			this.operationName = operation;
+		}
+	}
 
 	public static void main(String[] args) {
 		new Console().start();
@@ -13,21 +34,65 @@ public class Console {
 	private void start() {
 		mostraOperacoes();
 		buscaOperacao();
+		String left = buscaNumero();
+		String right = buscaNumero();
+		executaOperacao(left, right);
+		mostraResultado();
+	}
+
+	private void mostraResultado() {
+	}
+
+	private String buscaNumero() {
+		return getInUser("Informe um n√∫mero");
+	}
+	
+	private void executaOperacao(String left, String right) {
+		System.out.println("left: " + left);
+		System.out.println("right: " + right);
+	}
+
+	private String getInUser(String message) {
+		System.out.print(message);
+		byte[] awnser = new byte[1024];
+		try {
+			System.in.read(awnser);
+		} catch (IOException e) {
+			System.out.println("Erro ao obter resposta. Tente novamente!");
+		}
+		
+		return new String(awnser).trim();
 	}
 
 	private void buscaOperacao() {
-		String resp = "";
-		Scanner scanner = new Scanner(resp);
-		System.out.println("=========================");
-		System.out.println(resp);
+		
+		String in = getInUser("Opera√ß√£o desejada... ");
+		
+		try {
+			setOption(in);
+		} catch (IllegalArgumentException iae) {
+			mostraErroOpcaoInvalida();
+			start();
+		}
+	}
+
+	private void mostraErroOpcaoInvalida() {
+		System.out.println("\nOp√ß√£o inv√°lida. Tente novamente!\n");
 	}
 
 	private void mostraOperacoes() {
-		System.out.println("OperaÁıes v·lidas:");
-		System.out.println("[a]add");
-		System.out.println("[s]substract");
-		System.out.println("[c]compare");
-		System.out.print("OperaÁ„o desejada... ");
+		System.out.println("Opera√ß√µes v√°lidas:");
+		for (OPTION option : OPTION.values())
+			System.out.println(
+					"[" + 
+					option.name().toLowerCase() + 
+					"]" + 
+					option.getOperationName()
+			);
 	}
-
+	
+	public void setOption(String option) {
+		OPTION newOption = OPTION.valueOf(option.toUpperCase());
+		this.option = newOption;
+	}
 }
