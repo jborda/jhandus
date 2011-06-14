@@ -2,13 +2,14 @@ package br.com.objective.jeecourse.client.console;
 
 import java.io.IOException;
 
+import br.com.objective.jeecourse.client.proxy.ProxyCalculatorFactory;
 import br.com.objective.jeecourse.core.Calculator;
-import br.com.objective.jeecourse.core.CalculatorFactory;
 
 public class Console {
 	
-	Calculator calculator = new CalculatorFactory().newCalculator();
+	Calculator calculator = new ProxyCalculatorFactory().newCalculator();
 	OPTION option;
+	String result;
 	
 	enum OPTION {
 		A("add"),
@@ -34,13 +35,19 @@ public class Console {
 	private void start() {
 		mostraOperacoes();
 		buscaOperacao();
+		
+		if (option == OPTION.X)
+			System.exit(0);
+		
 		String left = buscaNumero();
 		String right = buscaNumero();
 		executaOperacao(left, right);
 		mostraResultado();
+		start();
 	}
 
 	private void mostraResultado() {
+		System.out.println("Result:" + result);
 	}
 
 	private String buscaNumero() {
@@ -48,8 +55,17 @@ public class Console {
 	}
 	
 	private void executaOperacao(String left, String right) {
-		System.out.println("left: " + left);
-		System.out.println("right: " + right);
+		switch (option) {
+		case A:
+			result = calculator.add(left, right);
+			break;
+		case S:
+			result = calculator.subtract(left, right);
+			break;
+		case C:
+			result = String.valueOf(calculator.compare(left, right));
+			break;
+		}
 	}
 
 	private String getInUser(String message) {

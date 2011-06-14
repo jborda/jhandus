@@ -1,5 +1,6 @@
 package br.com.objective.jeecourse.client.gui;
 
+import br.com.objective.jeecourse.client.proxy.ProxyCalculatorFactory;
 import br.com.objective.jeecourse.core.Calculator;
 import br.com.objective.jeecourse.core.CalculatorFactory;
 
@@ -11,7 +12,7 @@ public class Gui {
 	}
 
 	private Gui() {
-		CalculatorFactory factory = new CalculatorFactory();
+		CalculatorFactory factory = new ProxyCalculatorFactory("jose.silva", 8097);
 		Calculator calculator = factory.newCalculator();
 		View view = new View();
 		
