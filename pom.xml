@@ -22,14 +22,37 @@
 				<artifactId>huge-integer-calc-core</artifactId>
 				<version>${project.version}</version>
 				<type>jar</type>
-				<scope>compile</scope>
+				<!-- <scope>compile</scope> -->
+			</dependency>
+			<dependency>
+				<groupId>br.com.objective.jeecourse</groupId>
+				<artifactId>huge-integer-calc-server</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+				<!-- <scope>compile</scope> -->
+			</dependency>
+			<dependency>
+				<groupId>br.com.objective.jeecourse</groupId>
+				<artifactId>huge-integer-calc-proxy</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+				<!-- <scope>compile</scope> -->
+			</dependency>
+			<dependency>
+				<groupId>br.com.objective.jeecourse</groupId>
+				<artifactId>huge-integer-calc-client</artifactId>
+				<version>${project.version}</version>
+				<type>jar</type>
+				<!-- <scope>compile</scope> -->
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<modules>
 		<module>huge-integer-calc-core</module>
-		<module>huge-integer-calc-client</module>
 		<module>huge-integer-calc-server</module>
+		<module>huge-integer-calc-proxy</module>
+		<module>huge-integer-calc-client</module>
 		<module>huge-integer-calc-spykes</module>
 	</modules>
 

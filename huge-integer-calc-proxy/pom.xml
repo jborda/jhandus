@@ -7,24 +7,14 @@
 		<artifactId>huge-integer-calc</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>huge-integer-calc-client</artifactId>
+	<artifactId>huge-integer-calc-proxy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Huge Integer Calculator - Client</name>
+	<name>Huge Integer Calculator - Proxy</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>br.com.objective.jeecourse</groupId>
-			<artifactId>huge-integer-calc-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>br.com.objective.jeecourse</groupId>
-			<artifactId>huge-integer-calc-proxy</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.miglayout</groupId>
-			<artifactId>miglayout</artifactId>
-			<version>3.7.4</version>
-			<classifier>swing</classifier>
+			<artifactId>huge-integer-calc-server</artifactId>
 		</dependency>
 	</dependencies>
 

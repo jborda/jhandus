@@ -11,6 +11,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Huge Integer Calculator - Server</name>
 
+	<dependencies>
+		<dependency>
+			<groupId>br.com.objective.jeecourse</groupId>
+			<artifactId>huge-integer-calc-core</artifactId>
+		</dependency>
+	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>

@@ -2,16 +2,16 @@ package br.com.objective.jeecourse.client.console;
 
 import java.io.IOException;
 
-import br.com.objective.jeecourse.client.proxy.ProxyCalculatorFactory;
 import br.com.objective.jeecourse.core.Calculator;
+import br.com.objective.jeecourse.proxy.ProxyCalculatorFactory;
 
 public class Console {
 	
 	Calculator calculator = new ProxyCalculatorFactory().newCalculator();
-	OPTION option;
+	Option option;
 	String result;
 	
-	enum OPTION {
+	enum Option {
 		A("add"),
 		S("subtract"),
 		C("compare"),
@@ -23,7 +23,7 @@ public class Console {
 			return operationName;
 		}
 		
-		OPTION(String operation) {
+		Option(String operation) {
 			this.operationName = operation;
 		}
 	}
@@ -36,8 +36,8 @@ public class Console {
 		mostraOperacoes();
 		buscaOperacao();
 		
-		if (option == OPTION.X)
-			System.exit(0);
+		if (option == Option.X)
+			System.exit(-1);
 		
 		String left = buscaNumero();
 		String right = buscaNumero();
@@ -98,7 +98,7 @@ public class Console {
 
 	private void mostraOperacoes() {
 		System.out.println("Operações válidas:");
-		for (OPTION option : OPTION.values())
+		for (Option option : Option.values())
 			System.out.println(
 					"[" + 
 					option.name().toLowerCase() + 
@@ -108,7 +108,7 @@ public class Console {
 	}
 	
 	public void setOption(String option) {
-		OPTION newOption = OPTION.valueOf(option.toUpperCase());
+		Option newOption = Option.valueOf(option.toUpperCase());
 		this.option = newOption;
 	}
 }
